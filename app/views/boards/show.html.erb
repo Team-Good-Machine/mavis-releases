@@ -1,1 +1,12 @@
 <h1><%= @board.name %></h1>
+
+<% if @cards %>
+  <ul>
+    <% @cards.each do |card| %>
+      <li>
+        <a href="<%= card.url %>"><%= card.name %></a>
+        <small>(<%= card.created_at.to_date %>)</small>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

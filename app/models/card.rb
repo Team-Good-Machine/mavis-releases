@@ -30,4 +30,8 @@ class Card
     # Use the service to analyze cards
     BugDetectorService.analyze_cards(candidates)
   end
+
+  def severity_set?
+    trello_card.custom_field_items.any? { |field| field.custom_field.name.downcase == "severity" && field.option_id.present? }
+  end
 end

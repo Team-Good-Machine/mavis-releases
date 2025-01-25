@@ -10,6 +10,13 @@ class BoardsController < ApplicationController
 
       @cards = Card.find_suspected_bugs(all_cards)
     end
+
+    # Get all bug cards without severity
+    @bugs_without_severity = Card
+      .from_board(@board, since: @since)
+      .select { it.tagged_as_bug? && !it.severity_set? }
+      .sort_by(&:created_at)
+
   rescue Trello::Error => e
     render plain: "Error: #{e.message}", status: :not_found
   rescue Date::Error => e

@@ -1,5 +1,7 @@
 <h1><%= @board.name %></h1>
 
+<h2>Cards that could theoretically be bugs (since <%= @since.to_date.to_formatted_s(:rfc822) %>)</h2>
+
 <% if @cards %>
   <ul>
     <% @cards.each do |card| %>

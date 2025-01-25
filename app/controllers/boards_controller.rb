@@ -3,10 +3,12 @@ class BoardsController < ApplicationController
     @board = Trello::Board.find(params[:id])
 
     if params[:since].present?
-      since_date = Date.parse(params[:since]).beginning_of_day
-      @cards = @board
-        .cards(filter: "open", since: since_date.iso8601)
+      @cards = Card
+        .from_board(@board, since: Date.parse(params[:since]))
+        .reject { |card| card.tagged_as_bug? }
         .sort_by(&:created_at)
+
+      @since = Date.parse(params[:since])
     end
   rescue Trello::Error => e
     render plain: "Error: #{e.message}", status: :not_found

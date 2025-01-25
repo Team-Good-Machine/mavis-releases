@@ -34,4 +34,18 @@ class Card
   def severity_set?
     trello_card.custom_field_items.any? { |field| field.custom_field.name.downcase == "severity" && field.option_id.present? }
   end
+
+  def severity
+    severity_field = trello_card.custom_field_items.find { |field| field.custom_field.name.downcase == "severity" }
+    return nil unless severity_field&.option_id
+
+    # Get the selected option's value from checkbox_options
+    severity_field.custom_field.checkbox_options
+      .find { |opt| opt["id"] == severity_field.option_id }
+      &.dig("value", "text")
+  end
+
+  def high_severity?
+    %w[highest high medium].include?(severity&.downcase)
+  end
 end

@@ -15,19 +15,34 @@
   <% else %>
     <p>No potential bugs found.</p>
   <% end %>
-<% end %>
 
-<h2>Bugs without severity</h2>
+  <h2>High severity bugs</h2>
 
-<% if @bugs_without_severity.any? %>
-  <ul>
-    <% @bugs_without_severity.each do |card| %>
-      <li>
-        <a href="<%= card.url %>"><%= card.name %></a>
-        <small>(<%= card.created_at.to_date %>)</small>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No bugs found without severity.</p>
+  <% if @high_severity_bugs.any? %>
+    <ul>
+      <% @high_severity_bugs.each do |card| %>
+        <li>
+          <a href="<%= card.url %>"><%= card.name %></a>
+          <small>(<%= card.created_at.to_date %>, <%= card.severity %>)</small>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No high severity bugs found.</p>
+  <% end %>
+
+  <h2>Bugs without severity</h2>
+
+  <% if @bugs_without_severity.any? %>
+    <ul>
+      <% @bugs_without_severity.each do |card| %>
+        <li>
+          <a href="<%= card.url %>"><%= card.name %></a>
+          <small>(<%= card.created_at.to_date %>)</small>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No bugs found without severity.</p>
+  <% end %>
 <% end %>

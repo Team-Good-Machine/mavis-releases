@@ -9,11 +9,16 @@ A simple Rails application to help coordinate releases.
    - Copy your API Key (this will be your Developer Public Key)
    - Click on "Generate a Token" to get your Member Token
 
+2. Get your Anthropic API key:
+   - Visit https://console.anthropic.com/account/keys
+   - Generate and copy your API key
+
 2. Run the application:
 
 ```
 TRELLO_DEVELOPER_PUBLIC_KEY=your_api_key_here \
 TRELLO_MEMBER_TOKEN=your_member_token_here \
+ANTHROPIC_API_KEY=your_anthropic_key_here \
 bin/dev
 ```
 

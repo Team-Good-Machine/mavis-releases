@@ -39,6 +39,9 @@ gem "thruster", require: false
 
 gem "ruby-trello"
 
+# Use Anthropic's Claude API
+gem "anthropic"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

@@ -57,6 +57,11 @@ class Card
     end
   end
 
+  def planned_release
+    version_label = trello_card.labels.find { |label| label.name.match?(/^v\d+\.\d+\.\d+$/) }
+    version_label&.name
+  end
+
   private
 
   # Uses @board_custom_fields to find the severity field definition

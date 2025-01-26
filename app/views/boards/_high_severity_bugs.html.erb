@@ -8,6 +8,7 @@
         <th class="description-col">Description</th>
         <th>Severity</th>
         <th>Date raised</th>
+        <th>Planned for release</th>
         <th>Workaround</th>
       </tr>
     </thead>
@@ -18,6 +19,7 @@
           <td class="description-col"><a href="<%= card.url %>"><%= card.name %></a></td>
           <td><%= card.severity %></td>
           <td><%= card.created_at.to_date %></td>
+          <td><%= card.planned_release %></td>
           <td class="description-col"><%= card.workaround if card.workaround.present? %></td>
         </tr>
       <% end %>

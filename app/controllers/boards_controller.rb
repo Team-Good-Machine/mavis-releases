@@ -10,8 +10,9 @@ class BoardsController < ApplicationController
         @cards = Card.find_suspected_bugs(@board.cards(since: @since))
         render :potential_bugs
       when "high_severity_bugs"
-        @high_severity_bugs = @board.high_severity_bugs
-          .sort_by { |card| [card.severity_order, card.created_at] }
+        @high_severity_bugs = WorkaroundExtractorService.extract_workarounds(
+          @board.high_severity_bugs.sort_by { |card| [card.severity_order, card.created_at] }
+        )
         render :high_severity_bugs
       when "bugs_without_severity"
         @bugs_without_severity = @board.bug_cards.reject(&:severity_set?)

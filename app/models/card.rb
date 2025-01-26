@@ -3,6 +3,7 @@ class Card
   include ActiveModel::Attributes
 
   attr_reader :trello_card, :board_custom_fields
+  attr_accessor :workaround
 
   delegate :name, :url, :created_at, :id, :desc, to: :trello_card
 
@@ -12,6 +13,7 @@ class Card
   def initialize(trello_card, board_custom_fields: [])
     @trello_card = trello_card
     @board_custom_fields = board_custom_fields
+    @workaround = nil
   end
 
   def tagged_as_bug?

@@ -1,0 +1,16 @@
+<% if @since %>
+  <h2>Potentially overlooked bugs (since <%= @since.to_date.to_formatted_s(:rfc822) %>)</h2>
+
+  <% if @cards.any? %>
+    <ul>
+      <% @cards.each do |card| %>
+        <li>
+          <a href="<%= card.url %>"><%= card.name %></a>
+          <small>(<%= card.created_at.to_date %>)</small>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No potential bugs found.</p>
+  <% end %>
+<% end %>

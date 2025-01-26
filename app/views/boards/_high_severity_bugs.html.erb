@@ -1,0 +1,14 @@
+<h2>High severity bugs</h2>
+
+<% if @high_severity_bugs.any? %>
+  <ul>
+    <% @high_severity_bugs.each do |card| %>
+      <li>
+        <a href="<%= card.url %>"><%= card.name %></a>
+        <small>(<%= card.created_at.to_date %>, <%= card.severity %>)</small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No high severity bugs found.</p>
+<% end %>

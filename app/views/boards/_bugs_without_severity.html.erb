@@ -1,0 +1,14 @@
+<h2>Bugs without severity</h2>
+
+<% if @bugs_without_severity.any? %>
+  <ul>
+    <% @bugs_without_severity.each do |card| %>
+      <li>
+        <a href="<%= card.url %>"><%= card.name %></a>
+        <small>(<%= card.created_at.to_date %>)</small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No bugs found without severity.</p>
+<% end %>

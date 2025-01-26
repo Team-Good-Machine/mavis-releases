@@ -1,48 +1,7 @@
 <h1><%= @board.name %></h1>
 
-<% if @since %>
-  <h2>Potentially overlooked bugs (since <%= @since.to_date.to_formatted_s(:rfc822) %>)</h2>
+<%= turbo_frame_tag "potential_bugs", src: board_path(@board.id, since: @since, frame: "potential_bugs") %>
 
-  <% if @cards.any? %>
-    <ul>
-      <% @cards.each do |card| %>
-        <li>
-          <a href="<%= card.url %>"><%= card.name %></a>
-          <small>(<%= card.created_at.to_date %>)</small>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No potential bugs found.</p>
-  <% end %>
+<%= turbo_frame_tag "high_severity_bugs", src: board_path(@board.id, since: @since, frame: "high_severity_bugs") %>
 
-  <h2>High severity bugs</h2>
-
-  <% if @high_severity_bugs.any? %>
-    <ul>
-      <% @high_severity_bugs.each do |card| %>
-        <li>
-          <a href="<%= card.url %>"><%= card.name %></a>
-          <small>(<%= card.created_at.to_date %>, <%= card.severity %>)</small>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No high severity bugs found.</p>
-  <% end %>
-
-  <h2>Bugs without severity</h2>
-
-  <% if @bugs_without_severity.any? %>
-    <ul>
-      <% @bugs_without_severity.each do |card| %>
-        <li>
-          <a href="<%= card.url %>"><%= card.name %></a>
-          <small>(<%= card.created_at.to_date %>)</small>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No bugs found without severity.</p>
-  <% end %>
-<% end %>
+<%= turbo_frame_tag "bugs_without_severity", src: board_path(@board.id, since: @since, frame: "bugs_without_severity") %>

@@ -1,28 +1,29 @@
 class BoardsController < ApplicationController
   def show
     @board = Trello::Board.find(params[:id])
+    @since = Date.parse(params[:since]) if params[:since].present?
 
-    if params[:since].present?
-      @since = Date.parse(params[:since])
+    # Only load data for Turbo Frame requests
+    if turbo_frame_request?
       all_cards = Card
         .from_board(@board, since: @since)
         .sort_by(&:created_at)
 
-      @cards = Card.find_suspected_bugs(all_cards)
-
-      # Get all bug cards without severity
-      @bugs_without_severity = Card
-        .from_board(@board, since: @since)
-        .select { it.tagged_as_bug? && !it.severity_set? }
-        .sort_by(&:created_at)
-
-      # Get high severity bugs
-      @high_severity_bugs = Card
-        .from_board(@board, since: @since)
-        .select { it.tagged_as_bug? && it.high_severity? }
-        .sort_by(&:created_at)
+      case params[:frame]
+      when "potential_bugs"
+        @cards = Card.find_suspected_bugs(all_cards)
+        render :potential_bugs
+      when "high_severity_bugs"
+        @high_severity_bugs = all_cards.select { it.tagged_as_bug? && it.high_severity? }
+        render :high_severity_bugs
+      when "bugs_without_severity"
+        @bugs_without_severity = all_cards.select { it.tagged_as_bug? && !it.severity_set? }
+        render :bugs_without_severity
+      end
+      return
     end
 
+    # Initial page load has no card data
   rescue Trello::Error => e
     render plain: "Error: #{e.message}", status: :not_found
   rescue Date::Error => e

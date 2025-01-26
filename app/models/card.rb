@@ -18,8 +18,9 @@ class Card
     since_date = since&.beginning_of_day
 
     board
-      .cards(filter: "open", since: since_date&.iso8601)
-      .map { |trello_card| new(trello_card) }
+      .cards(filter: "visible", since: since_date&.iso8601, customFieldItems: 'true')
+      .map { new(it) }
+      # .take(1)
   end
 
   def self.find_suspected_bugs(cards)

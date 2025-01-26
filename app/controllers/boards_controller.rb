@@ -5,13 +5,15 @@ class BoardsController < ApplicationController
 
     # Only load data for Turbo Frame requests
     if turbo_frame_request?
-      all_cards = Card
+      all_cards_since = Card
         .from_board(@board, since: @since)
         .sort_by(&:created_at)
 
+      all_cards = Card.from_board(@board)
+
       case params[:frame]
       when "potential_bugs"
-        @cards = Card.find_suspected_bugs(all_cards)
+        @cards = Card.find_suspected_bugs(all_cards_since)
         render :potential_bugs
       when "high_severity_bugs"
         @high_severity_bugs = all_cards.select { it.tagged_as_bug? && it.high_severity? }

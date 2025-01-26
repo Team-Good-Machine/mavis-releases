@@ -1,36 +1,36 @@
 require 'trello'
 
-require 'logger'
+# require 'logger'
 # Enable Faraday debug logging
-module Trello
-  module TFaraday
-    class TInternet
-      class << self
-        private
+# module Trello
+#   module TFaraday
+#     class TInternet
+#       class << self
+#         private
 
-        def execute_core(request)
-          conn = Faraday.new(
-            request.uri.to_s,
-            headers: request.headers,
-            proxy: ENV['HTTP_PROXY'],
-            request: { timeout: 10 }
-          ) do |faraday|
-            # Add logger middleware
-            faraday.response :logger, Logger.new($stdout), { bodies: false, headers: false }
+#         def execute_core(request)
+#           conn = Faraday.new(
+#             request.uri.to_s,
+#             headers: request.headers,
+#             proxy: ENV['HTTP_PROXY'],
+#             request: { timeout: 10 }
+#           ) do |faraday|
+#             # Add logger middleware
+#             faraday.response :logger, Logger.new($stdout), { bodies: false, headers: false }
 
-            faraday.response :raise_error
-            faraday.request :multipart
-            faraday.request :json
-          end
+#             faraday.response :raise_error
+#             faraday.request :multipart
+#             faraday.request :json
+#           end
 
-          conn.send(request.verb) do |req|
-            req.body = request.body
-          end
-        end
-      end
-    end
-  end
-end
+#           conn.send(request.verb) do |req|
+#             req.body = request.body
+#           end
+#         end
+#       end
+#     end
+#   end
+# end
 
 module Trello
   class Card

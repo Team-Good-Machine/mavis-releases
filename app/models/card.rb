@@ -44,6 +44,17 @@ class Card
     %w[highest high medium].include?(severity&.downcase)
   end
 
+  def severity_order
+    case severity&.downcase
+    when "highest" then 0
+    when "high"    then 1
+    when "medium"  then 2
+    when "low"     then 3
+    when "lowest"  then 4
+    else 5  # for "not sure", "not a bug", or nil
+    end
+  end
+
   private
 
   # Uses @board_custom_fields to find the severity field definition

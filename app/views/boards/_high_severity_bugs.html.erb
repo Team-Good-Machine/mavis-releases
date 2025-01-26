@@ -1,14 +1,35 @@
 <h2>High severity bugs</h2>
 
 <% if @high_severity_bugs.any? %>
-  <ul>
-    <% @high_severity_bugs.each do |card| %>
-      <li>
-        <a href="<%= card.url %>"><%= card.name %></a>
-        <small>(<%= card.created_at.to_date %>, <%= card.severity %>)</small>
-      </li>
-    <% end %>
-  </ul>
+  <table class="bugs-table">
+    <thead>
+      <tr>
+        <th>Trello ID</th>
+        <th class="description-col">Description</th>
+        <th>Severity</th>
+        <th>Date raised</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @high_severity_bugs.each do |card| %>
+        <tr>
+          <td><%= card.trello_card.short_id %></td>
+          <td class="description-col"><a href="<%= card.url %>"><%= card.name %></a></td>
+          <td><%= card.severity %></td>
+          <td><%= card.created_at.to_date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
   <p>No high severity bugs found.</p>
 <% end %>
+
+<style>
+  .bugs-table .description-col {
+    width: 600px;
+    max-width: 600px;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>

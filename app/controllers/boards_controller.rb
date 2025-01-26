@@ -13,7 +13,9 @@ class BoardsController < ApplicationController
         @cards = Card.find_suspected_bugs(all_cards_since)
         render :potential_bugs
       when "high_severity_bugs"
-        @high_severity_bugs = all_bugs.select(&:high_severity?)
+        @high_severity_bugs = all_bugs
+          .select(&:high_severity?)
+          .sort_by { |card| [card.severity_order, card.created_at] }
         render :high_severity_bugs
       when "bugs_without_severity"
         @bugs_without_severity = all_bugs.reject(&:severity_set?)

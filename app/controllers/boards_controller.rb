@@ -11,14 +11,14 @@ class BoardsController < ApplicationController
         render :potential_bugs
       when "high_severity_bugs"
         @high_severity_bugs = WorkaroundExtractorService.extract_workarounds(
-          @board.high_severity_bugs.sort_by { |card| [card.severity_order, card.created_at] }
+          @board.high_severity_bugs.sort_by { |card| [ card.severity_order, card.created_at ] }
         )
         render :high_severity_bugs
       when "bugs_without_severity"
         @bugs_without_severity = @board.bug_cards.reject(&:severity_set?)
         render :bugs_without_severity
       end
-      return
+      nil
     end
 
     # Initial page load has no card data

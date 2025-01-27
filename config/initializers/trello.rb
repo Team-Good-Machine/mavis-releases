@@ -1,4 +1,4 @@
-require 'trello'
+require "trello"
 
 # require 'logger'
 # Enable Faraday debug logging
@@ -38,8 +38,8 @@ module Trello
       super
 
       # If customFields were included in the response, parse them into custom_field_items
-      if fields['customFieldItems'].is_a?(Array)
-        @custom_field_items = fields['customFieldItems'].map { CustomFieldItem.new(it) }
+      if fields["customFieldItems"].is_a?(Array)
+        @custom_field_items = fields["customFieldItems"].map { CustomFieldItem.new(it) }
       end
     end
 
@@ -52,6 +52,6 @@ end
 
 # Then configure Trello
 Trello.configure do |config|
-  config.developer_public_key = ENV['TRELLO_DEVELOPER_PUBLIC_KEY']
-  config.member_token = ENV['TRELLO_MEMBER_TOKEN']
+  config.developer_public_key = ENV["TRELLO_DEVELOPER_PUBLIC_KEY"]
+  config.member_token = ENV["TRELLO_MEMBER_TOKEN"]
 end

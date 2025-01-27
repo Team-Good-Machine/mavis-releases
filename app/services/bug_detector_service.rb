@@ -65,7 +65,7 @@ class BugDetectorService
       }
     )
 
-    response_from_claude = response.dig('content', 0, 'text')
+    response_from_claude = response.dig("content", 0, "text")
     JSON.parse(response_from_claude[/\[(.*?)\]/m, 0])
   end
 end

@@ -15,7 +15,7 @@ class Board
     since_date = since&.beginning_of_day
 
     trello_board
-      .cards(filter: "visible", since: since_date&.iso8601, customFieldItems: 'true')
+      .cards(filter: "visible", since: since_date&.iso8601, customFieldItems: "true")
       .map { |card| Card.new(card, board_custom_fields:) }
   end
 
